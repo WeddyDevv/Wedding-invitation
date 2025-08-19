@@ -10,6 +10,9 @@ import WhenWhere from "@/components/sections/WhenWhere";
 import LatestNews from "@/components/sections/LatestNews";
 import WeddingMenu from "@/components/sections/WeddingMenu";
 import BlessingQuote from "@/components/sections/BlessingQuote";
+
+
+
 const Nav = () => (
   <header className="w-full relative overflow-hidden py-4 sm:py-6 md:py-8 lg:py-12">
     {/* Decorative background pattern */}
