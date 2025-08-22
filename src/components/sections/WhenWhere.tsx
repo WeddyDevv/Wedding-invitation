@@ -3,47 +3,7 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import ringImg from "@/assets/when-where-ring.jpg";
 import coupleImg from "@/assets/couple-embrace.jpg";
-import nikahImg from "@/assets/nikah.jpg"; // 👈 add nikah image
-
-interface EventItem {
-  key: "nikah" | "reception" | "dinner"; // 👈 fix: include nikah
-  title: string;
-  datetime: string;
-  address: string;
-  phone: string;
-}
-
-const EVENTS: EventItem[] = [
-  {
-    key: "nikah",
-    title: "Nikah Ceremony",
-    datetime: "Monday, 12 Apr, 2022 | 11:00 AM – 12:30 PM",
-    address: "Central Jame Masjid, 12 Mosque Road, Manchester, Kentucky 39495",
-    phone: "+1 234-999-1111",
-  },
-  {
-    key: "reception",
-    title: "The Reception",
-    datetime: "Monday, 12 Apr, 2022 | 1:00 PM – 2:30 PM",
-    address: "4857 Washington Ave. Manchester, Kentucky 39495",
-    phone: "+1 234-687-8910",
-  },
-  {
-    key: "dinner",
-    title: "The Dinner",
-    datetime: "Monday, 12 Apr, 2022 | 7:00 PM – 10:00 PM",
-    address: "4857 Washington Ave. Manchester, Kentucky 39495",
-    phone: "+1 234-687-8910",
-  },
-];
-
-const EVENT_MEDIA: Record<EventItem["key"], { src: string; alt: string }> = {
-  nikah: { src: nikahImg, alt: "Mosque wedding ceremony" },
-  reception: { src: ringImg, alt: "Bride’s hand with wedding ring holding white orchids" },
-  dinner: { src: coupleImg, alt: "Bride and groom embracing" },
-};
-
-
+import nikahImg from "@/assets/nikah.jpg";
 
 const FloralDivider = () => (
   <div className="flex justify-center py-2" aria-hidden>
@@ -58,10 +18,6 @@ const FloralDivider = () => (
 );
 
 const WhenWhere: React.FC = () => {
-  const [index, setIndex] = React.useState(0);
-  const event = EVENTS[index];
-  const media = EVENT_MEDIA[event.key];
-
   return (
     <section
       id="when-and-where"
@@ -79,86 +35,61 @@ const WhenWhere: React.FC = () => {
         <FloralDivider />
       </header>
 
-      {/* Event Switch Tabs */}
-      <div className="mt-6 flex justify-center gap-4">
-        {EVENTS.map((e, i) => (
-          <button
-            key={e.key}
-            onClick={() => setIndex(i)}
-            className={cn(
-              "px-4 py-2 rounded-md text-sm font-medium transition-colors",
-              index === i ? "bg-accent text-white" : "bg-muted text-muted-foreground hover:bg-accent/20"
-            )}
-          >
-            {e.title}
-          </button>
-        ))}
-      </div>
-
-      {/* Content */}
-      <div
-        className={cn(
-          "grid overflow-hidden rounded-lg border border-border bg-background mt-6 sm:mt-8 md:mt-12",
-          // 👇 reverse order if it's dinner
-          event.key === "dinner" ? "md:grid-cols-[1fr_1.2fr]" : "md:grid-cols-[1.2fr_1fr]"
-        )}
-      >
-        {/* Image (position depends on event type) */}
-        {event.key === "reception" ? (
-          <>
-            {/* Reception -> Image Left */}
-            <div className="relative h-48 w-full sm:h-56 md:h-[380px] lg:h-[420px]">
-              <img
-                key={event.key}
-                src={media.src}
-                alt={media.alt}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover animate-[fade-in_0.5s_ease-out]"
-              />
-            </div>
-            <EventCard event={event} />
-          </>
-        ) : (
-          <>
-            {/* Dinner -> Card Left, Image Right */}
-            <EventCard event={event} />
-            <div className="relative h-48 w-full sm:h-56 md:h-[380px] lg:h-[420px]">
-              <img
-                key={event.key}
-                src={media.src}
-                alt={media.alt}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover animate-[fade-in_0.5s_ease-out]"
-              />
-            </div>
-          </>
-        )}
+      {/* Static 3 Cards */}
+      <div className="mt-10 grid gap-8 md:grid-cols-3">
+        <EventCard
+          title="Nikah Ceremony"
+          datetime="Monday, 12 Apr, 2025 | After Namaz-e-Asr"
+          address="Wazir Ali Masjid, Lal Darwaza, Hyderabad"
+          img={nikahImg}
+        />
+        <EventCard
+          title="Reception"
+          datetime="Monday, 12 Apr, 2025 | 1:00 PM – 2:30 PM"
+          address="4857 Washington Ave. Manchester, Kentucky 39495"
+          img={ringImg}
+        />
+        <EventCard
+          title="Dinner"
+          datetime="Monday, 12 Apr, 2025 | 7:00 PM – 10:00 PM"
+          address="4857 Washington Ave. Manchester, Kentucky 39495"
+          img={coupleImg}
+        />
       </div>
     </section>
   );
 };
 
-const EventCard = ({ event }: { event: EventItem }) => (
-  <div className="p-3 sm:p-4 md:p-0 md:flex md:items-center">
-    <Card className="mx-auto w-full max-w-[520px] rounded-xl border-border bg-card/95 p-4 sm:p-6 shadow-sm md:mr-6 md:p-8">
-      <div key={event.key} className="animate-enter" aria-live="polite">
-        <h3 className="font-display text-lg sm:text-xl text-foreground md:text-2xl">{event.title}</h3>
-        <span className="mt-2 block h-0.5 w-12 rounded-full bg-accent" />
+const EventCard = ({
+  title,
+  datetime,
+  address,
+  img,
+}: {
+  title: string;
+  datetime: string;
+  address: string;
+  img: string;
+}) => (
+  <Card className="overflow-hidden rounded-xl border-border bg-card/95 shadow-sm">
+    <div className="relative h-48 w-full sm:h-56 md:h-64 lg:h-72">
+      <img
+        src={img}
+        alt={title}
+        loading="lazy"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+    </div>
+    <div className="p-4 sm:p-6">
+      <h3 className="font-display text-lg sm:text-xl text-foreground md:text-2xl">{title}</h3>
+      <span className="mt-2 block h-0.5 w-12 rounded-full bg-accent" />
 
-        <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3 font-display text-xs sm:text-sm text-muted-foreground md:text-base">
-          <p>{event.datetime}</p>
-          <p>{event.address}</p>
-          <p>{event.phone}</p>
-        </div>
-
-        <div className="mt-4 sm:mt-6">
-          <a href="#" className="text-sm sm:text-base text-accent underline-offset-4 hover:underline">
-            See Location
-          </a>
-        </div>
+      <div className="mt-4 space-y-2 font-display text-xs sm:text-sm text-muted-foreground md:text-base">
+        <p>{datetime}</p>
+        <p>{address}</p>
       </div>
-    </Card>
-  </div>
+    </div>
+  </Card>
 );
 
 export default WhenWhere;
