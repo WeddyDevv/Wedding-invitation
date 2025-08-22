@@ -2,7 +2,7 @@ import { Facebook, Twitter, Instagram, Heart, ShoppingCart, Search } from "lucid
 import TeardropImage from "@/components/hero/TeardropImage";
 import OvalImage from "@/components/hero/OvalImage";
 import groomImg from "@/assets/groom-portrait.jpg";
-import coupleImg from "@/assets/couple-embrace.jpg";
+import coupleImg from "@/assets/weds.png";
 import brideImg from "@/assets/bride-portrait.jpg";
 import CountdownBanner from "@/components/sections/CountdownBanner";
 import StoryTimeline from "@/components/sections/StoryTimeline";
@@ -98,14 +98,14 @@ const Index = () => {
             </article>
 
             {/* Center: Couple with oval and double outline */}
-            <article className="flex flex-col items-center order-3 md:order-2">
+            <article className="flex flex-col items-center order-2 md:order-2">
               <div className="w-80 sm:w-96 md:w-[24rem] lg:w-[32rem]">
                 <OvalImage src={coupleImg} alt="Bride and groom embracing" className="w-full h-auto" />
               </div>
             </article>
 
             {/* Right: Bride */}
-            <article className="flex flex-col items-center text-center order-2 md:order-3">
+            <article className="flex flex-col items-center text-center order-3 md:order-3">
               <div className="w-40 sm:w-48 md:w-56 lg:w-64">
                 <TeardropImage src={brideImg} alt="Bride portrait" className="w-full h-auto" />
               </div>
